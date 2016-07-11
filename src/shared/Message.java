@@ -12,19 +12,25 @@ import java.io.Serializable;
  */
 public class Message implements Serializable
     {
-    private final String commandMessage;
+    private final String messageHead;
+    private final String data;
     private final String authToken;
     
-    public Message (CommonMessages inMessage, String inAuthToken)
+    public Message (MessageHeaders inMessage, String dataIn, String inAuthToken)
         {
-        commandMessage = inMessage.msg();
+        messageHead = inMessage.msg();
+        data = dataIn;
         authToken = inAuthToken;
         }
     
-    public CommonMessages getCommonMessage()
+    public MessageHeaders getHead()
         {
-        return CommonMessages.fromString(commandMessage);
+        return MessageHeaders.fromString(messageHead);
         }
+    
+    public String getData() {
+        return data;
+    }
     
     public String getAuthToken()
         {

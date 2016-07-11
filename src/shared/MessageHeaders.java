@@ -9,7 +9,7 @@ package shared;
  *
  * @author Estiaan Janse Van Rensburg <https://github.com/EstiaanJ>
  */
-public enum CommonMessages
+public enum MessageHeaders
     {
     VERSION_REQUEST("VERSION"), //Find a better enum for this...
     NEW_SESSION_REQUEST("New Session"),
@@ -47,17 +47,19 @@ public enum CommonMessages
     NO_MESSAGE("NO_MESSAGE"),
     
     VERSION_MESSAGE_START("VERSION:"),
-    DEFAUL_VERSION("0.2");
+    DEFAULT_VERSION("0.2"),
+    
+    AUTH_TOKEN_ISSUE("Here is your new authentication token.");
     
     private String msg;
     
-    private CommonMessages(String msg) {
+    private MessageHeaders(String msg) {
             this.msg = msg;
         }
     
-    public static CommonMessages fromString(String text) {
+    public static MessageHeaders fromString(String text) {
             if (text != null) {
-                for (CommonMessages b : CommonMessages.values()) {
+                for (MessageHeaders b : MessageHeaders.values()) {
                     if (text.equals(b.msg())) {
                         return b;
                     }
