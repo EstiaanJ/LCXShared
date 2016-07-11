@@ -38,6 +38,7 @@ public enum MessageHeaders
 
     LOGIN_REQUEST("Login Request"),
     LOGOUT_REQUEST("Logout Request"),
+    LOGOUT_CONFIRMED("Logout has taken place."),
     LOGIN_AWAITING_ACCOUNT_NUMBER("Login Ready"),
     LOGIN_AWAITING_PASSWORD("Ready for password"),
     LOGIN_PREPARE_FOR_DETAILS("Login Succesful"),
@@ -50,7 +51,9 @@ public enum MessageHeaders
     VERSION_MESSAGE_START("VERSION:"),
     DEFAULT_VERSION("0.2"),
     
-    AUTH_TOKEN_ISSUE("Here is your new authentication token.");
+    AUTH_TOKEN_ISSUE("Here is your new authentication token."),
+    BALANCE_STATEMENT("Here is your balance statement."),
+    BALANCE_INQUIRY("What is my balance, Mr. Wolf?");
     
     private String msg;
     

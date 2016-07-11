@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -31,8 +33,14 @@ public class MessageHandler {
         messageOut.flush();
     }
     
-    public Message receive() throws IOException, ClassNotFoundException {
-        return (Message) messageIn.readObject();
+    public Message receive() throws IOException {
+        try {
+            return (Message) messageIn.readObject();
+        } catch (ClassNotFoundException ex) {
+            System.err.println("ClassNotFoundException when decoding an object from the socket stream.");
+            assert false;
+            return null;
+        }
     }
     
 }
