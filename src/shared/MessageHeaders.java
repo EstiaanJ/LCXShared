@@ -37,6 +37,7 @@ public enum MessageHeaders
     CONNECTION_CLOSE_ACKNOWLEDGE("Closing"),
 
     LOGIN_REQUEST("Login Request"),
+    LOGOUT_REQUEST("Logout Request"),
     LOGIN_AWAITING_ACCOUNT_NUMBER("Login Ready"),
     LOGIN_AWAITING_PASSWORD("Ready for password"),
     LOGIN_PREPARE_FOR_DETAILS("Login Succesful"),
