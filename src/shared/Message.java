@@ -13,13 +13,20 @@ import java.io.Serializable;
 public class Message implements Serializable
     {
     private final String messageHead;
-    private final String data;
+    private final String protocolVersion;
+    private final String[] data;
     private final String authToken;
     
-    public Message (MessageHeaders inMessage, String dataIn, String inAuthToken)
+    public Message (MessageHeaders inMessage, String protIn, String[] dataIn, String inAuthToken)
         {
         messageHead = inMessage.msg();
-        data = dataIn;
+        protocolVersion = protIn;
+        
+        //Copy by VALUE. Bad compiler warning is bad. It's wrong. Its suggestion will copy by reference.
+        data = new String[dataIn.length];
+        for (int i=0; i < dataIn.length; i++)
+            data[i] = dataIn[i];
+        
         authToken = inAuthToken;
         }
     
@@ -28,8 +35,12 @@ public class Message implements Serializable
         return MessageHeaders.fromString(messageHead);
         }
     
-    public String getData() {
+    public String[] getData() {
         return data;
+    }
+    
+    public String getProtocolVersion() {
+        return protocolVersion;
     }
     
     public String getAuthToken()
