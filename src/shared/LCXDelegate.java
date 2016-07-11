@@ -69,6 +69,7 @@ public class LCXDelegate {
         Message reply = mailer.receive();
         switch (reply.getHead()) {
             case LOGOUT_CONFIRMED:
+                authToken = "";
                 return true;
             default:
                 return false;
