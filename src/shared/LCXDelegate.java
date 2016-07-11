@@ -21,10 +21,10 @@ public class LCXDelegate {
     
     public static String hostName = "localhost";
     public static int portNumber = 2388;
-    Socket sock;
-    MessageHandler mailer;
+    private Socket sock;
+    private MessageHandler mailer;
     
-    String authToken;
+    private String authToken;
     
     public LCXDelegate() {
         
@@ -45,7 +45,7 @@ public class LCXDelegate {
         if (isLoggedIn())
             return false;
         
-        mailer.send(new Message(MessageHeaders.LOGIN_REQUEST,PROTOCOL_VERSION,new String[]{AccountID, password},null));
+        mailer.send(new Message(MessageHeaders.LOGIN_REQUEST,PROTOCOL_VERSION,new String[]{AccountID, password},""));
         Message reply = mailer.receive();
         switch (reply.getHead()) {
             case AUTH_TOKEN_ISSUE:
@@ -65,7 +65,7 @@ public class LCXDelegate {
         if (!isLoggedIn())
             return false;
         
-        mailer.send(new Message(MessageHeaders.LOGOUT_REQUEST,PROTOCOL_VERSION,null,authToken));
+        mailer.send(new Message(MessageHeaders.LOGOUT_REQUEST,PROTOCOL_VERSION,new String[0],authToken));
         Message reply = mailer.receive();
         switch (reply.getHead()) {
             case LOGOUT_CONFIRMED:
@@ -76,23 +76,29 @@ public class LCXDelegate {
         }
     }
     
-    public int balance() throws IOException {
+    public double balance() throws IOException {
         
         if (!isLoggedIn())
             return -1;
         
-        mailer.send(new Message(MessageHeaders.BALANCE_INQUIRY,PROTOCOL_VERSION,null,authToken));
+        mailer.send(new Message(MessageHeaders.BALANCE_INQUIRY,PROTOCOL_VERSION,new String[0],authToken));
         Message reply = mailer.receive();
         
         switch (reply.getHead()) {
             case BALANCE_STATEMENT:
-                return Integer.parseInt(reply.getData()[0]);
+                return Double.parseDouble(reply.getData()[0]);
             default:
                 return -1;
         }
     }
     
+    /*
+    public boolean transfer(String recipientAccountID, double amount) {
+        
+    }
+    */
+    
     private boolean isLoggedIn() {
-        return authToken.equals("");
+        return (!authToken.equals(""));
     }
 }
