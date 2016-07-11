@@ -27,7 +27,12 @@ public class UserAccount implements Serializable
         userNumber = inUserNumber;
         userPassword = inPassword;
         }
-        
+    
+    public void setLatinum(String inLatinum)
+        {
+        userLatinum = new BigDecimal(inLatinum);
+        }
+    
     public void setUserName(String inName)
         {
         userName = inName;
