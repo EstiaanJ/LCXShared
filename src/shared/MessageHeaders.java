@@ -52,8 +52,12 @@ public enum MessageHeaders
     DEFAULT_VERSION("0.2"),
     
     AUTH_TOKEN_ISSUE("Here is your new authentication token."),
+    SESSION_EXPIRED_NOTIFY("Your authentication token is not valid. The session probably expired."),
     BALANCE_STATEMENT("Here is your balance statement."),
-    BALANCE_INQUIRY("What is my balance, Mr. Wolf?");
+    BALANCE_INQUIRY("What is my balance, Mr. Wolf?"),
+    
+    PING("I'm pinging you."),
+    PONG("I'm replying to your ping.");
     
     private String msg;
     
