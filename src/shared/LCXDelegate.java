@@ -33,9 +33,11 @@ public class LCXDelegate {
     
     private void endSession() {
         try {
-            sock.getInputStream().close();
-            sock.getOutputStream().close();
-            sock.close();
+            if(!sock.isClosed()) {
+                //sock.getInputStream().close();
+                //sock.getOutputStream().close();
+                sock.close();
+            }
         } catch (IOException ex) {
             Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, "Was unable to close a socket communicating with the Latinum server. Will continue without closing it.", ex);
             ex.printStackTrace();
