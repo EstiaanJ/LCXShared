@@ -16,6 +16,8 @@ public enum MessageHeaders
     NEW_SESSION_ACKNOWLEDGE("New Session Granted"),
 
     NEW_USID_REQUEST("New USID"),
+    NEW_ACCOUNT_REQUEST("I'd like a new account"),
+    NEW_ACCOUNT_RECEIPT("Account created. Here is your account number."),
 
     UPDATE_REQUEST("Update"),
 

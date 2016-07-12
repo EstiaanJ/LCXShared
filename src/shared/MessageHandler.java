@@ -13,12 +13,12 @@ import java.io.OutputStream;
 
 /**
  *
- * @author Murdock
+ * @author Murdock Grewar <https://github.com/Myridium>
  */
 public class MessageHandler {
     
-    private ObjectInputStream messageIn;
-    private ObjectOutputStream messageOut;
+    private final ObjectInputStream messageIn;
+    private final ObjectOutputStream messageOut;
     
     public MessageHandler(InputStream inStream, OutputStream outStream) throws IOException {
         messageOut = new ObjectOutputStream(outStream);
