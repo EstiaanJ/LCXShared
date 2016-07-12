@@ -215,4 +215,20 @@ public class LCXDelegate {
         //We start out without an authentication token.
         authToken = "";
     }
+    public String newAccount(String name, String password) throws UnexpectedResponseException, CommunicationException {
+        
+        try {
+            mailer.send(new Message(MessageHeaders.NEW_ACCOUNT_REQUEST,PROTOCOL_VERSION,new String[]{name,password},""));
+            Message reply = mailer.receive();
+
+            switch (reply.getHead()) {
+                case NEW_ACCOUNT_RECEIPT:
+                    return reply.getData()[0];
+                default:
+                    throw new UnexpectedResponseException("Unable to interpret the server's response to the balance inquiry.");
+            }
+        } catch (IOException e) {
+            throw new CommunicationException("A problem occured when trying to communicate with the server.",e);
+        }
+    }
 }

@@ -28,8 +28,6 @@ public enum MessageHeaders
     RECEIPT_ACCOUNT_NAME("Name Recieved"),
     RECEIPT_ACCOUNT_PASSWORD("Password Recieved"),
 
-    NEW_ACCOUNT_NUMBER_REQUEST("New Account Number"),
-
     NEW_TRANSFER_REQUEST("Transfer"),
     NEW_TRANSFER_AWAITING_RECEIPIENT("Ready for transfer to"),
     NEW_TRANSFER_AWAITING_AMOUNT("Ready for amount"),
