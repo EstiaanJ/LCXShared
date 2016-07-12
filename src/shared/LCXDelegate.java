@@ -80,17 +80,8 @@ public class LCXDelegate {
     
     public LCXDelegate() throws CommunicationException {
         
-        try {
-            sock = new Socket();
-            sock.connect(new InetSocketAddress(hostName,portNumber), 5000);
-            mailer = new MessageHandler(sock.getInputStream(),sock.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CommunicationException("Could not initiae contact with the server.");
-        }
+        resetConnection();
         
-        //We start out without an authentication token.
-        authToken = "";
     }
     
     public boolean login(String AccountID, String password) throws CommunicationException, UnexpectedResponseException {
@@ -179,6 +170,7 @@ public class LCXDelegate {
     }
     */
     
+    //Note that this method will not only check if we are logged in, but also contact the server again if we have lost connection.
     public boolean isLoggedIn() throws CommunicationException, UnexpectedResponseException {
         if(authToken.equals("")) {
             return false;
@@ -204,8 +196,23 @@ public class LCXDelegate {
 
                 }
             } catch (IOException e) {
-                throw new CommunicationException("A problem occured when trying to communicate with the server.",e);
+                resetConnection();
+                return false;
             }
         }
+    }
+    
+    private void resetConnection() throws CommunicationException {
+        try {
+            sock = new Socket();
+            sock.connect(new InetSocketAddress(hostName,portNumber), 5000);
+            mailer = new MessageHandler(sock.getInputStream(),sock.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, null, ex);
+            throw new CommunicationException("Could not initiae contact with the server.");
+        }
+        
+        //We start out without an authentication token.
+        authToken = "";
     }
 }
