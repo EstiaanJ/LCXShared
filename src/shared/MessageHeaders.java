@@ -28,10 +28,9 @@ public enum MessageHeaders
     RECEIPT_ACCOUNT_NAME("Name Recieved"),
     RECEIPT_ACCOUNT_PASSWORD("Password Recieved"),
 
-    NEW_TRANSFER_REQUEST("Transfer"),
-    NEW_TRANSFER_AWAITING_RECEIPIENT("Ready for transfer to"),
-    NEW_TRANSFER_AWAITING_AMOUNT("Ready for amount"),
-    RECEIPT_TRANSFER_COMPLETE("Done with transfer"),
+    TRANSFER_REQUEST("Transfer"),
+    TRANSFER_RECEIPT_SUCCESS("Transfer success"),
+    TRANSFER_RECEIPT_FAIL("Transfer fail"),
 
     CONNECTION_CLOSE_REQUEST("Close"),
     CONNECTION_CLOSE_ACKNOWLEDGE("Closing"),
@@ -45,11 +44,10 @@ public enum MessageHeaders
     LOGIN_FAIL_RECEIPT("Login Unsuccesful"),
     LOGIN_COMPLETE_RECEIPT("Login Done"),
 
-    ERROR_GENERIC("SERVER ERROR"),
+    //ERROR_GENERIC("SERVER ERROR"),
     NO_MESSAGE("NO_MESSAGE"),
     
     VERSION_MESSAGE_START("VERSION:"),
-    DEFAULT_VERSION("0.2"),
     
     AUTH_TOKEN_ISSUE("Here is your new authentication token."),
     SESSION_EXPIRED_NOTIFY("Your authentication token is not valid. The session probably expired."),

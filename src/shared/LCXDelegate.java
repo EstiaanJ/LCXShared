@@ -136,7 +136,7 @@ public class LCXDelegate {
         }
     }
     
-    public double balance() throws CommunicationException, NotLoggedInException, UnexpectedResponseException {
+    public String balance() throws CommunicationException, NotLoggedInException, UnexpectedResponseException {
         
         if (!isLoggedIn())
             throw new NotLoggedInException("The client is not logged in to the server.");
@@ -147,7 +147,7 @@ public class LCXDelegate {
 
             switch (reply.getHead()) {
                 case BALANCE_STATEMENT:
-                    return Double.parseDouble(reply.getData()[0]);
+                    return reply.getData()[0];
                     
                 //THIS CODE SHOULD BE UNREACHABLE.
                 //isLoggedIn() method should clear the token if we are not logged in, and so the server should not give this reply.
@@ -164,11 +164,34 @@ public class LCXDelegate {
         }
     }
     
-    /*
-    public boolean transfer(String recipientAccountID, double amount) {
+    public boolean transfer(String recipientAccountID, String amount) throws CommunicationException, UnexpectedResponseException, NotLoggedInException {
+        if (!isLoggedIn())
+            throw new NotLoggedInException("The client is not logged in to the server.");
         
+        try {
+            mailer.send(new Message(MessageHeaders.TRANSFER_REQUEST,PROTOCOL_VERSION,new String[]{recipientAccountID,amount},authToken));
+            Message reply = mailer.receive();
+
+            switch (reply.getHead()) {
+                case TRANSFER_RECEIPT_FAIL:
+                    return false;
+                case TRANSFER_RECEIPT_SUCCESS:
+                    return true;
+                    
+                //THIS CODE SHOULD BE UNREACHABLE.
+                //isLoggedIn() method should clear the token if we are not logged in, and so the server should not give this reply.
+                case SESSION_EXPIRED_NOTIFY:
+                    assert(false);
+                    throw new NotLoggedInException("The server says I am not logged in.");
+                ///////////////////
+                    
+                default:
+                    throw new UnexpectedResponseException("Unable to interpret the server's response to the balance inquiry.");
+            }
+        } catch (IOException e) {
+            throw new CommunicationException("A problem occured when trying to communicate with the server.",e);
+        }
     }
-    */
     
     //Note that this method will not only check if we are logged in, but also contact the server again if we have lost connection.
     public boolean isLoggedIn() throws CommunicationException, UnexpectedResponseException {
