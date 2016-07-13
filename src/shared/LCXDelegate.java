@@ -31,7 +31,7 @@ public class LCXDelegate {
     
     private String authToken;
 
-    public void dispose() throws CommunicationException, UnexpectedResponseException, NotLoggedInException {
+    public void dispose() throws CommunicationException, UnexpectedResponseException {
         logout();
         endSession();
     }
@@ -40,10 +40,10 @@ public class LCXDelegate {
         try {
             if (sock != null) {
                 if(!sock.isClosed()) {
-                    //sock.getInputStream().close();
-                    //sock.getOutputStream().close();
                     mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],""));
-                    sock.close();
+                    
+                    sock.shutdownOutput();
+                    sock.shutdownInput();
                 }
             }
         } catch (IOException ex) {
@@ -123,7 +123,7 @@ public class LCXDelegate {
         }
     }
     
-    public void logout() throws CommunicationException, UnexpectedResponseException, NotLoggedInException {
+    public void logout() throws CommunicationException, UnexpectedResponseException {
         
         if (!isLoggedIn())
             return;
@@ -139,7 +139,7 @@ public class LCXDelegate {
                 //isLoggedIn() method should clear the token if we are not logged in, and so the server should not give this reply.
                 case SESSION_EXPIRED_NOTIFY:
                     assert(false);
-                    throw new NotLoggedInException("The server says I am not logged in.");
+                    //throw new NotLoggedInException("The server says I am not logged in.");
                 ///////////////////
                     
                 default:
