@@ -24,7 +24,7 @@ public class LCXDelegate {
     private final int SOCKET_CONNECT_TIMEOUT;
     private final int SOCKET_GENERAL_TIMEOUT;
     
-    public static String hostName = "lcx.ddns.net";
+    public static String hostName = "localhost";
     public static int portNumber = 2388;
     private Socket sock;
     private MessageHandler mailer;
@@ -38,11 +38,13 @@ public class LCXDelegate {
     
     private void endSession() {
         try {
-            if(!sock.isClosed()) {
-                //sock.getInputStream().close();
-                //sock.getOutputStream().close();
-                //mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],""));
-                sock.close();
+            if (sock != null) {
+                if(!sock.isClosed()) {
+                    //sock.getInputStream().close();
+                    //sock.getOutputStream().close();
+                    mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],""));
+                    sock.close();
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, "Was unable to close a socket communicating with the Latinum server. Will continue without closing it.", ex);
