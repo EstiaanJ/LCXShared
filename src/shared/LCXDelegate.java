@@ -41,7 +41,7 @@ public class LCXDelegate {
             if(!sock.isClosed()) {
                 //sock.getInputStream().close();
                 //sock.getOutputStream().close();
-                mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],authToken));
+                //mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],""));
                 sock.close();
             }
         } catch (IOException ex) {
@@ -239,6 +239,7 @@ public class LCXDelegate {
     }
     
     private void resetConnection() throws CommunicationException {
+        endSession();
         try {
             sock = new Socket();
             sock.connect(new InetSocketAddress(hostName,portNumber), SOCKET_CONNECT_TIMEOUT);
@@ -246,7 +247,7 @@ public class LCXDelegate {
             mailer = new MessageHandler(sock.getInputStream(),sock.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, null, ex);
-            throw new CommunicationException("Could not initiae contact with the server.");
+            throw new CommunicationException("Could not initiate contact with the server.");
         }
         
         //We start out without an authentication token.
@@ -262,7 +263,7 @@ public class LCXDelegate {
                 case NEW_ACCOUNT_RECEIPT:
                     return reply.getData()[0];
                 default:
-                    throw new UnexpectedResponseException("Unable to interpret the server's response to the balance inquiry.");
+                    throw new UnexpectedResponseException("Unable to interpret the server's response.");
             }
         } catch (IOException e) {
             throw new CommunicationException("A problem occured when trying to communicate with the server.",e);
