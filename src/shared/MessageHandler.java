@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.SocketTimeoutException;
 
 /**
  *
@@ -31,7 +32,7 @@ public class MessageHandler {
         messageOut.flush();
     }
     
-    public Message receive() throws IOException {
+    public Message receive() throws SocketTimeoutException, IOException {
         try {
             return (Message) messageIn.readObject();
         } catch (ClassNotFoundException ex) {

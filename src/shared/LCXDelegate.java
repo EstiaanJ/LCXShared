@@ -18,8 +18,13 @@ import java.util.logging.Logger;
 public class LCXDelegate {
     
     private static final String PROTOCOL_VERSION = "0.2";
+    private static final int DEFAULT_SOCKET_CONNECT_TIMEOUT = 300;
+    private static final int DEFAULT_SOCKET_GENERAL_TIMEOUT = 200;
     
-    public static String hostName = "localhost";
+    private final int SOCKET_CONNECT_TIMEOUT;
+    private final int SOCKET_GENERAL_TIMEOUT;
+    
+    public static String hostName = "lcx.ddns.net";
     public static int portNumber = 2388;
     private Socket sock;
     private MessageHandler mailer;
@@ -78,10 +83,17 @@ public class LCXDelegate {
 
     }
     
-    public LCXDelegate() throws CommunicationException {
-        
+
+    public LCXDelegate(int timeout) throws CommunicationException {
+        SOCKET_GENERAL_TIMEOUT = timeout;
+        SOCKET_CONNECT_TIMEOUT = timeout;
         resetConnection();
-        
+    }
+    
+    public LCXDelegate() throws CommunicationException {
+        SOCKET_GENERAL_TIMEOUT = DEFAULT_SOCKET_GENERAL_TIMEOUT;
+        SOCKET_CONNECT_TIMEOUT = DEFAULT_SOCKET_CONNECT_TIMEOUT;
+        resetConnection();
     }
     
     public boolean login(String AccountID, String password) throws CommunicationException, UnexpectedResponseException {
@@ -228,7 +240,8 @@ public class LCXDelegate {
     private void resetConnection() throws CommunicationException {
         try {
             sock = new Socket();
-            sock.connect(new InetSocketAddress(hostName,portNumber), 5000);
+            sock.connect(new InetSocketAddress(hostName,portNumber), SOCKET_CONNECT_TIMEOUT);
+            sock.setSoTimeout(SOCKET_GENERAL_TIMEOUT);
             mailer = new MessageHandler(sock.getInputStream(),sock.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(LCXDelegate.class.getName()).log(Level.SEVERE, null, ex);
