@@ -24,7 +24,7 @@ public class LCXDelegate {
     private final int SOCKET_CONNECT_TIMEOUT;
     private final int SOCKET_GENERAL_TIMEOUT;
     
-    public static String hostName = "localhost";
+    public static String hostName = "lcx.ddns.net";
     public static int portNumber = 2388;
     private Socket sock;
     private MessageHandler mailer;
