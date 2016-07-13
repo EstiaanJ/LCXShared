@@ -41,6 +41,7 @@ public class LCXDelegate {
             if(!sock.isClosed()) {
                 //sock.getInputStream().close();
                 //sock.getOutputStream().close();
+                mailer.send(new Message(MessageHeaders.CONNECTION_CLOSE,PROTOCOL_VERSION, new String[0],authToken));
                 sock.close();
             }
         } catch (IOException ex) {

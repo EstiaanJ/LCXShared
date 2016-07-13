@@ -32,8 +32,7 @@ public enum MessageHeaders
     TRANSFER_RECEIPT_SUCCESS("Transfer success"),
     TRANSFER_RECEIPT_FAIL("Transfer fail"),
 
-    CONNECTION_CLOSE_REQUEST("Close"),
-    CONNECTION_CLOSE_ACKNOWLEDGE("Closing"),
+    CONNECTION_CLOSE("Closing socket now"),
 
     LOGIN_REQUEST("Login Request"),
     LOGOUT_REQUEST("Logout Request"),
