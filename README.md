@@ -1,4 +1,4 @@
-# LCXShared
+# LCXShared v0.1
 A library to support client communication with an instance of the LCX-Server project. 
 
 Public functions of the main class, LCXDelegate, include:
